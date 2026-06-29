@@ -9,15 +9,17 @@ def ask_claude(command):
 
     client = anthropic.Anthropic(api_key=api_key)
 
-    message = client.messages.create(
-        model="claude-opus-4-8",
-        max_tokens=300,
-        messages=[
-            {
-                "role": "user",
-                "content": f"Explain this shell command in plain English, flag by flag, in 3-5 sentences. Be beginner-friendly. Command: {command}"
-            }
-        ]
-    )
-
-    return message.content[0].text
+    try:
+        message = client.messages.create(
+            model="claude-opus-4-8",
+            max_tokens=300,
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"Explain this shell command in plain English, flag by flag, in 3-5 sentences. Be beginner-friendly. Command: {command}"
+                }
+            ]
+        )
+        return message.content[0].text
+    except Exception:
+        return None
